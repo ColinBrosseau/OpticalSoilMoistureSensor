@@ -20,14 +20,17 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
-
-  delay(1); //wait for the LED to reach steady state
 
   for (int index = 0; index < numReadings; index++){
-    int value = analogRead(inputPin); 
-    readings[index] = value;  
-    delay(1); 
+    // Read signal with LED on
+    digitalWrite(led, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(1); //wait for the LED to reach steady state
+    readings[index] = analogRead(inputPin);
+    // Read signal with LED off
+    digitalWrite(led, LOW);   // turn the LED off (LOW is the voltage level)
+    delay(1); //wait for the LED to reach steady state
+    value = analogRead(inputPin); 
+    readings[index] -= analogRead(inputPin);
   }
   total = 0;
   for (int index = 0; index < numReadings; index++){
@@ -51,7 +54,6 @@ void loop() {
   //delay(1000);               // wait for a second
   digitalWrite(led, LOW);    // turn the LED off by making the voltage LOW
   delay(1000);               // wait for a second
-
 
 } // loop ends here
 
